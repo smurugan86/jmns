@@ -1,0 +1,4 @@
+db.account_types.insert({"_id" : "account_type_01","name" : "Food","type" : "Expense","createdDate" : ISODate("2015-09-04T13:06:25.361Z")});
+db.account_types.insert({"_id" : "account_type_02","name" : "Salary","type" : "Income","createdDate" : ISODate("2015-09-04T13:06:25.361Z")});
+db.account_types.insert({"_id" : "account_type_03","name" : "House Rent","type" : "Expense","createdDate" : ISODate("2015-09-04T13:06:25.361Z")});
+db.account_types.insert({"_id" : "account_type_04","name" : "Car Loan","type" : "Expense","createdDate" : ISODate("2015-09-04T13:06:25.361Z")});

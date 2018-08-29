@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+						   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						   http://www.springframework.org/schema/context
+						   http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<bean name="quartzInitializerJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="com.ghx.cc.commitment.jobs.QuartzInitializerJob" />
+		<property name="durability" value="true" />
+	</bean>
+
+	<bean id="rosterChangeNotificationJobBean" class="com.ghx.cc.commitment.jobs.RosterChangeNotificationJob" />
+	<bean id="sendRecommitmentRequiredAlertEmailsJobBean" class="com.ghx.cc.commitment.jobs.SendRecommitmentRequiredAlertEmailsJob" />
+	<bean id="endRecommitmentRequiredOffersPreviousAmendmentsJobBean" class="com.ghx.cc.commitment.jobs.EndRecommitmentRequiredOffersPreviousAmendmentsJob" />
+	<bean id="futurePublishedContractEmailJobBean" class="com.ghx.cc.commitment.jobs.FuturePublishedContractEmailJob" />
+	<bean id="contractTCFGenerationJobBean" class="com.ghx.cc.commitment.jobs.tcfextract.ContractTCFGenerationJob" />
+
+	<bean id="outboundHPGJobBean" class="com.ghx.cc.commitment.jobs.outbound.OutboundFileHPGJob">
+		<property name="interfaceService" ref="interfaceService" />
+	</bean>
+
+	<bean id="outboundRoiJobBean" class="com.ghx.cc.commitment.jobs.outbound.OutboundFileRoiJob">
+		<property name="interfaceService" ref="interfaceService" />
+		<property name="commonService" ref="commonService" />
+		<property name="offerDistributionService" ref="offerDistributionService" />
+	</bean>
+
+	<bean id="migrationDataArchiveJobBean" class="com.ghx.cc.commitment.jobs.MigrationDataArchiveJob">
+	</bean>
+	
+    <bean id="inboundFileJobBean" class="com.ghx.cc.commitment.jobs.InboundFileJob">
+		<property name="interfaceService" ref="interfaceService" />
+	</bean>
+	
+    <bean id="hybridInboundFileJobBean" class="com.ghx.cc.commitment.jobs.HybridInboundFileJob">
+		<property name="interfaceService" ref="interfaceService" />
+	</bean>
+	
+	<bean id="distributor845AcknowledgementJobBean" class="com.ghx.cc.commitment.jobs.Distributor845AcknowledgementJob">
+		<property name="distributorService" ref="distributorService" />
+	</bean>
+	
+	 <bean id="offerAutoSubmitJobBean" class="com.ghx.cc.commitment.jobs.OfferAutoSubmitJob">
+		<property name="contractService" ref="contractService" />
+		<property name="gpoService" ref="gpoService" />
+	</bean>
+	
+	 <bean id="offerReportSyncJobBean" class="com.ghx.cc.commitment.jobs.OfferReportSyncJob">
+		<property name="offerService" ref="offerService" />
+		<property name="configService" ref="configService" />
+		<property name="typesService" ref="typesService" />
+	</bean>
+	
+	<bean id="contractReportSyncJobBean" class="com.ghx.cc.commitment.jobs.ContractReportSyncJob">
+		<property name="contractService" ref="contractService" />
+		<property name="configService" ref="configService" />
+	</bean>
+
+	<bean id="quartzInitializerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="quartzInitializerJob" />
+		<property name="startDelay" value="5000" />
+		<property name="repeatInterval" value="0" />
+		<property name="repeatCount" value="0" />
+	</bean>
+
+	<bean name="triggers" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+		<property name="triggers">
+			<list>
+				<ref bean="quartzInitializerTrigger" />
+			</list>
+		</property>
+	</bean>
+</beans>

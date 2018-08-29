@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+						   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						   http://www.springframework.org/schema/context
+						   http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+		
+	<bean name="createContract" class="com.ghx.cc.commitment.scheduler.CcmJobDetailFactoryBean">
+		<property name="jobClass" value="com.ghx.cc.commitment.scheduler.rin.GenericAsynchronousRestJob" />
+		<property name="group" value="rin" />
+		<property name="durability" value="true" />
+		 <property name="requestsRecovery" value="true" />
+	</bean>
+	
+	<bean name="migrateContract" class="com.ghx.cc.commitment.scheduler.CcmJobDetailFactoryBean">
+		<property name="jobClass" value="com.ghx.cc.commitment.scheduler.rin.GenericAsynchronousRestJob" />
+		<property name="group" value="rin" />
+		<property name="durability" value="true" />
+	</bean>
+	
+	<bean name="createOffer" class="com.ghx.cc.commitment.scheduler.CcmJobDetailFactoryBean">
+		<property name="jobClass" value="com.ghx.cc.commitment.scheduler.rin.GenericAsynchronousRestJob" />
+		<property name="group" value="rin" />
+		<property name="durability" value="true" />
+		 <property name="requestsRecovery" value="true" />
+	</bean>
+	
+	<bean name="migrateOffer" class="com.ghx.cc.commitment.scheduler.CcmJobDetailFactoryBean">
+		<property name="jobClass" value="com.ghx.cc.commitment.scheduler.rin.GenericAsynchronousRestJob" />
+		<property name="group" value="rin" />
+		<property name="durability" value="true" />
+	</bean>
+	
+	<bean name="processCommand" class="com.ghx.cc.commitment.scheduler.CcmJobDetailFactoryBean">
+		<property name="jobClass" value="com.ghx.cc.commitment.scheduler.rin.GenericAsynchronousRestJob" />
+		<property name="group" value="rin" />
+		<property name="durability" value="true" />
+		 <property name="requestsRecovery" value="true" />
+	</bean>
+	
+	<bean name="processOfferCommand" class="com.ghx.cc.commitment.scheduler.CcmJobDetailFactoryBean">
+		<property name="jobClass" value="com.ghx.cc.commitment.scheduler.rin.GenericAsynchronousRestJob" />
+		<property name="group" value="rin" />
+		<property name="durability" value="true" />
+		 <property name="requestsRecovery" value="true" />
+	</bean>
+	
+	<bean name="processOffersCommand" class="com.ghx.cc.commitment.scheduler.CcmJobDetailFactoryBean">
+		<property name="jobClass" value="com.ghx.cc.commitment.scheduler.rin.GenericAsynchronousRestJob" />
+		<property name="group" value="rin" />
+		<property name="durability" value="true" />
+		 <property name="requestsRecovery" value="true" />
+	</bean>
+	
+	<bean name="processOfferAttachmentCommand" class="com.ghx.cc.commitment.scheduler.CcmJobDetailFactoryBean">
+		<property name="jobClass" value="com.ghx.cc.commitment.scheduler.rin.GenericAsynchronousRestJob" />
+		<property name="group" value="rin" />
+		<property name="durability" value="true" />
+		 <property name="requestsRecovery" value="true" />
+	</bean>
+	
+	<bean id="rinScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    <property name="dataSource" ref="ccmDataSource" />
+	    <property name="transactionManager" ref="txManager" />
+	    <property name="configLocation" value="classpath:/scheduler/rin_quartz.properties"/>
+	    <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+	    
+	    <property name="overwriteExistingJobs" value="true" />
+	    <property name="autoStartup" value="true" />
+		<property name="startupDelay" value="10"/>
+	    <property name="jobDetails">
+	        <list>
+	            <ref bean="createContract" />
+	            <ref bean="migrateContract" />
+	            <ref bean="createOffer" />
+	            <ref bean="processCommand" />
+	            <ref bean="migrateOffer" />
+	            <ref bean="processOfferCommand" />
+	            <ref bean="processOffersCommand" />
+	            <ref bean="processOfferAttachmentCommand" />
+	        </list>
+	    </property>
+	    <property name="jobFactory">
+	        <bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
+	    </property>
+	</bean>
+	
+	<bean id="rinScheduler2" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    <property name="dataSource" ref="ccmDataSource" />
+	    <property name="transactionManager" ref="txManager" />
+	    <property name="configLocation" value="classpath:/scheduler/rin_quartz.properties"/>
+	    <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+	    
+	    <property name="overwriteExistingJobs" value="true" />
+	    <property name="autoStartup" value="true" />
+		<property name="startupDelay" value="10"/>
+	    <property name="jobDetails">
+	        <list>
+	            <ref bean="createContract" />
+	            <ref bean="migrateContract" />
+	            <ref bean="createOffer" />
+	            <ref bean="processCommand" />
+	            <ref bean="migrateOffer" />
+	            <ref bean="processOfferCommand" />
+	            <ref bean="processOffersCommand" />
+	            <ref bean="processOfferAttachmentCommand" />
+	        </list>
+	    </property>
+	    <property name="jobFactory">
+	        <bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
+	    </property>
+	</bean>
+	
+	<bean id="rinScheduler3" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    <property name="dataSource" ref="ccmDataSource" />
+	    <property name="transactionManager" ref="txManager" />
+	    <property name="configLocation" value="classpath:/scheduler/rin_quartz.properties"/>
+	    <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+	    
+	    <property name="overwriteExistingJobs" value="true" />
+	    <property name="autoStartup" value="true" />
+		<property name="startupDelay" value="10"/>
+	    <property name="jobDetails">
+	        <list>
+	            <ref bean="createContract" />
+	            <ref bean="migrateContract" />
+	            <ref bean="createOffer" />
+	            <ref bean="processCommand" />
+	            <ref bean="migrateOffer" />
+	            <ref bean="processOfferCommand" />
+	            <ref bean="processOffersCommand" />
+	            <ref bean="processOfferAttachmentCommand" />
+	        </list>
+	    </property>
+	    <property name="jobFactory">
+	        <bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
+	    </property>
+	</bean>
+	
+	<bean id="rinScheduler4" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    <property name="dataSource" ref="ccmDataSource" />
+	    <property name="transactionManager" ref="txManager" />
+	    <property name="configLocation" value="classpath:/scheduler/rin_quartz.properties"/>
+	    <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+	    
+	    <property name="overwriteExistingJobs" value="true" />
+	    <property name="autoStartup" value="true" />
+		<property name="startupDelay" value="10"/>
+	    <property name="jobDetails">
+	        <list>
+	            <ref bean="createContract" />
+	            <ref bean="migrateContract" />
+	            <ref bean="createOffer" />
+	            <ref bean="processCommand" />
+	            <ref bean="migrateOffer" />
+	            <ref bean="processOfferCommand" />
+	            <ref bean="processOffersCommand" />
+	            <ref bean="processOfferAttachmentCommand" />
+	        </list>
+	    </property>
+	    <property name="jobFactory">
+	        <bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
+	    </property>
+	</bean>
+	
+	<bean id="rinScheduler5" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	    <property name="dataSource" ref="ccmDataSource" />
+	    <property name="transactionManager" ref="txManager" />
+	    <property name="configLocation" value="classpath:/scheduler/rin_quartz.properties"/>
+	    <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+	    
+	    <property name="overwriteExistingJobs" value="true" />
+	    <property name="autoStartup" value="true" />
+		<property name="startupDelay" value="10"/>
+	    <property name="jobDetails">
+	        <list>
+	            <ref bean="createContract" />
+	            <ref bean="migrateContract" />
+	            <ref bean="createOffer" />
+	            <ref bean="processCommand" />
+	            <ref bean="migrateOffer" />
+	            <ref bean="processOfferCommand" />
+	            <ref bean="processOffersCommand" />
+	            <ref bean="processOfferAttachmentCommand" />
+	        </list>
+	    </property>
+	    <property name="jobFactory">
+	        <bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" />
+	    </property>
+	</bean>
+</beans>
